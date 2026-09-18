@@ -2,344 +2,158 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Vora — Bench in your pocket</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#08090b;--ink:#f3ebe0;--ink-dim:#b8aea0;--mute:#7d766c;
-  --line:rgba(243,235,224,.1);--panel:#101218;--panel2:#161922;
-  --cream:#f3ebe0;--accent:#d4b896;--danger:#e07a6a;--warn:#d4b45a;--ok:#8fad8a;
-  --glow:rgba(212,184,150,.14);
-}
+:root{--bg:#08090b;--ink:#f3ebe0;--dim:#b8aea0;--mute:#7d766c;--line:rgba(243,235,224,.1);--panel:#101218;--cream:#f3ebe0;--accent:#d4b896}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer}
-.bg{
-  position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(900px 500px at 15% -10%, rgba(212,184,150,.16), transparent 60%),
-    radial-gradient(700px 480px at 90% 10%, rgba(120,140,180,.1), transparent 55%),
-    radial-gradient(600px 400px at 70% 90%, rgba(180,100,80,.06), transparent 50%),
-    var(--bg);
-}
-.bg::after{
-  content:"";position:absolute;inset:0;opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+.bg{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(900px 500px at 12% -8%,rgba(212,184,150,.15),transparent 60%),radial-gradient(700px 480px at 92% 8%,rgba(120,140,180,.08),transparent 55%),var(--bg)}
 .wrap{width:min(1180px,calc(100% - 40px));margin:0 auto;position:relative;z-index:1}
-.topnote{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:12px 0 0}
+.topnote{text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:14px 0 0}
 .topnote span{color:var(--accent)}
-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:18px;padding:12px 16px;border:1px solid var(--line);border-radius:999px;
-  background:rgba(16,18,24,.72);backdrop-filter:blur(16px);position:sticky;top:14px;z-index:20;
-}
-.logo{font-family:"Instrument Serif",Georgia,serif;font-size:28px;letter-spacing:-.02em}
-.nav-mid{display:flex;gap:22px;font-size:13px;color:var(--ink-dim)}
-.nav-mid a:hover{color:var(--ink)}
-.nav-right{display:flex;gap:10px;align-items:center}
-.btn{
-  border:0;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:500;
-  transition:transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-.btn:active{transform:translateY(1px)}
-.btn-solid{background:var(--cream);color:#111}
-.btn-solid:hover{background:#fff7ea;box-shadow:0 0 0 4px var(--glow)}
+nav{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding:12px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(16,18,24,.75);backdrop-filter:blur(16px);position:sticky;top:14px;z-index:20}
+.logo{font-family:"Instrument Serif",Georgia,serif;font-size:28px}
+.nav-mid{display:flex;gap:22px;font-size:13px;color:var(--dim)}.nav-mid a:hover{color:var(--ink)}
+.nav-right{display:flex;gap:10px}
+.btn{border:0;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:500;display:inline-block}
+.btn-solid{background:var(--cream);color:#111}.btn-solid:hover{background:#fff7ea}
 .btn-line{background:transparent;color:var(--ink);border:1px solid rgba(243,235,224,.22)}
-.btn-line:hover{border-color:rgba(243,235,224,.45);background:rgba(243,235,224,.04)}
-.hero{display:grid;grid-template-columns:0.92fr 1.08fr;gap:42px;align-items:center;padding:54px 0 40px}
-.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+.btn-line:hover,.btn-line.active{border-color:rgba(243,235,224,.45);background:rgba(243,235,224,.08)}
+.hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding:48px 0 36px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
 .kicker i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);display:inline-block}
-h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(44px,5.4vw,64px);line-height:1.02;letter-spacing:-.03em;margin:0 0 18px}
+h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(42px,5.2vw,60px);line-height:1.02;letter-spacing:-.03em;margin:0 0 16px}
 h1 em{font-style:italic;color:var(--accent)}
-.lede{font-size:17px;color:var(--ink-dim);max-width:36ch;margin:0 0 28px}
-.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.lede{font-size:16px;color:var(--dim);max-width:36ch;margin:0 0 24px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
 .fine{font-size:12px;color:var(--mute)}
-/* Product stage */
-.stage{
-  border:1px solid var(--line);border-radius:20px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.03),transparent 30%), var(--panel);
-  box-shadow:0 40px 100px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
-}
-.stage-bar{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:10px 14px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.25);
-}
-.dots{display:flex;gap:6px}
-.dots span{width:8px;height:8px;border-radius:50%;background:#3a3d45}
-.dots span:nth-child(1){background:#6b4f4a}
-.dots span:nth-child(2){background:#6b5e3f}
-.dots span:nth-child(3){background:#4a5a4a}
-.stage-url{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;padding:5px 10px}
-.stage-body{display:grid;grid-template-columns:148px 1fr 1.05fr;min-height:430px}
-.side{border-right:1px solid var(--line);padding:14px 10px;background:rgba(0,0,0,.18)}
-.side .label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:0 8px 8px}
-.side button{
-  width:100%;text-align:left;background:transparent;border:0;color:var(--ink-dim);
-  padding:9px 10px;border-radius:10px;font-size:12.5px;margin-bottom:2px;
-}
-.side button.active,.side button:hover{background:rgba(243,235,224,.06);color:var(--ink)}
-.side button.active{box-shadow:inset 3px 0 0 var(--accent)}
-.doc{padding:16px;border-right:1px solid var(--line);overflow:auto}
-.doc-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:11px;color:var(--mute);font-family:"IBM Plex Mono",monospace}
-.doc-paper{
-  background:#f7f1e6;color:#1c1915;border-radius:10px;padding:18px 16px;min-height:340px;
-  font-family:"Instrument Serif",Georgia,serif;font-size:13.5px;line-height:1.55;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-}
-.doc-paper h3{margin:0 0 10px;font-size:16px;font-weight:500;letter-spacing:-.01em}
-.doc-paper p{margin:0 0 10px;color:#3a342c}
-.hl{background:rgba(224,122,106,.22);border-bottom:2px solid rgba(224,122,106,.55);padding:0 2px}
-.hl2{background:rgba(212,180,90,.2);border-bottom:2px solid rgba(212,180,90,.5);padding:0 2px}
-.out{padding:14px;background:var(--panel2);display:flex;flex-direction:column;gap:10px}
-.out-head{display:flex;justify-content:space-between;align-items:center}
-.out-head strong{font-size:13px;font-weight:500}
-.badge{font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:4px 8px;color:var(--accent)}
-.status{
-  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);
-  display:flex;align-items:center;gap:8px;min-height:18px;
-}
-.status .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.3}
-.status.live .pulse{opacity:1;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.4}}
-.find{
-  border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.18);
-  transform:translateY(6px);opacity:0;transition:all .35s ease;
-}
-.find.show{transform:none;opacity:1}
-.find .row{display:flex;gap:8px;align-items:center;margin-bottom:4px}
-.tag{font-size:10px;font-weight:600;padding:3px 7px;border-radius:6px;letter-spacing:.04em}
-.tag-h{background:var(--high-bg);color:var(--danger)}
-.tag-m{background:var(--warn-bg,var(--med-bg));color:var(--warn)}
-.tag-l{background:var(--low-bg);color:var(--low)}
-.find p{margin:0;font-size:12.5px;color:var(--ink-dim)}
-.note{
-  margin-top:auto;border-top:1px solid var(--line);padding-top:12px;
-  font-family:"Instrument Serif",Georgia,serif;font-size:14px;color:var(--ink-dim);line-height:1.45;
-  opacity:0;transform:translateY(8px);transition:all .4s ease .1s;
-}
-.note.show{opacity:1;transform:none}
-.note strong{color:var(--ink);font-weight:400}
+.stage{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);box-shadow:0 40px 100px rgba(0,0,0,.55)}
+.stage-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.28)}
+.dots{display:flex;gap:6px}.dots span{width:8px;height:8px;border-radius:50%;background:#3a3d45}
+.dots span:nth-child(1){background:#6b4f4a}.dots span:nth-child(2){background:#6b5e3f}.dots span:nth-child(3){background:#4a5a4a}
+.stage-url{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute)}
+.tabs{display:flex;gap:8px;padding:12px 14px 0;flex-wrap:wrap}
+.shot-wrap{padding:12px;background:#0a0b0e}
+.shot-wrap img{display:block;width:100%;border-radius:10px;border:1px solid var(--line)}
+.caption{padding:10px 14px 14px;font-size:12px;color:var(--mute);font-family:"IBM Plex Mono",monospace}
 .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:8px 0 56px}
 .metric{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.02)}
 .metric b{display:block;font-family:"Instrument Serif",Georgia,serif;font-size:28px;font-weight:400;margin-bottom:4px}
 .metric span{font-size:12px;color:var(--mute)}
-.section{padding:24px 0 72px}
-.section h2{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(30px,3.5vw,40px);font-weight:400;letter-spacing:-.02em;margin:0 0 10px}
-.section .sub{color:var(--ink-dim);max-width:50ch;margin:0 0 24px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.cardish{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent), var(--panel)}
-.cardish h3{font-family:"Instrument Serif",Georgia,serif;font-size:24px;font-weight:400;margin:0 0 8px}
-.cardish ul{margin:12px 0 0;padding:0;list-style:none}
-.cardish li{padding:9px 0;border-top:1px solid var(--line);font-size:14px;color:var(--ink-dim)}
+.section{padding:10px 0 64px}
+.section h2{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(28px,3.4vw,38px);font-weight:400;letter-spacing:-.02em;margin:0 0 10px}
+.section .sub{color:var(--dim);max-width:52ch;margin:0 0 22px}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gallery figure{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+.gallery img{display:block;width:100%}
+.gallery figcaption{padding:12px 14px;font-size:13px;color:var(--dim);border-top:1px solid var(--line)}
+.gallery figcaption strong{display:block;color:var(--ink);font-weight:500;margin-bottom:2px}
 .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .price{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--panel)}
-.price.hot{border-color:rgba(212,184,150,.35);box-shadow:0 0 0 1px rgba(212,184,150,.08), 0 20px 50px rgba(0,0,0,.25)}
+.price.hot{border-color:rgba(212,184,150,.35)}
 .price .n{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
 .price .a{font-family:"Instrument Serif",Georgia,serif;font-size:34px;margin:8px 0 4px}
 .price .a span{font-size:15px;color:var(--mute)}
-.price .m{font-size:13px;color:var(--ink-dim);margin-bottom:14px}
+.price .m{font-size:13px;color:var(--dim);margin-bottom:14px}
 footer{border-top:1px solid var(--line);padding:24px 0 48px;color:var(--mute);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-@media (max-width:980px){
-  .hero,.stage-body,.metrics,.grid2,.pricing{grid-template-columns:1fr}
-  .nav-mid{display:none}
-  .stage-body{grid-template-columns:1fr}
-  .side{display:none}
-  .doc{border-right:0;border-bottom:1px solid var(--line)}
-}
+@media (max-width:960px){.hero,.metrics,.gallery,.pricing{grid-template-columns:1fr}.nav-mid{display:none}}
 </style>
 </head>
 <body>
 <div class="bg"></div>
 <div class="wrap">
-  <div class="topnote">Preview · <span>not production</span> · dual hero: Review + Draft</div>
+  <div class="topnote">Revamp preview · <span>real app screenshots</span> · Review + Draft</div>
   <nav>
     <a class="logo" href="#">Vora</a>
     <div class="nav-mid">
       <a href="#product">Product</a>
+      <a href="#gallery">Screens</a>
       <a href="#pricing">Pricing</a>
-      <a href="#why">Why Vora</a>
     </div>
     <div class="nav-right">
-      <button class="btn btn-line" type="button">Sign in</button>
-      <button class="btn btn-solid" type="button" id="nav-try">Try sample</button>
+      <a class="btn btn-line" href="https://www.voraai.co.in/auth/login">Sign in</a>
+      <a class="btn btn-solid" href="https://www.voraai.co.in/dashboard">Open app</a>
     </div>
   </nav>
-
   <section class="hero">
     <div>
       <div class="kicker"><i></i> Bench in your pocket</div>
       <h1>Review the contract.<br/><em>Draft</em> what comes next.</h1>
-      <p class="lede">Co-counsel for Indian practice — risk memo in seconds, first draft from a brief. Sample runs without an account.</p>
+      <p class="lede">Co-counsel for Indian practice. Homepage leads with the two workflows people already use — shown with the real product, not fake chrome.</p>
       <div class="cta-row">
-        <button class="btn btn-solid" id="run-review" type="button">Run sample NDA review</button>
-        <button class="btn btn-line" id="run-draft" type="button">Switch to draft</button>
+        <a class="btn btn-solid" href="https://www.voraai.co.in/review">Start contract review</a>
+        <a class="btn btn-line" href="https://www.voraai.co.in/draft">Open draft</a>
       </div>
-      <p class="fine">No SSO for the demo · 15 credits after sign-in · prepaid packs, no auto-renew</p>
+      <p class="fine">Screens below are live captures from voraai.co.in</p>
     </div>
-
     <div class="stage" id="product">
       <div class="stage-bar">
         <div class="dots"><span></span><span></span><span></span></div>
-        <div class="stage-url">vora.ai / workspace / review</div>
-        <div style="width:42px"></div>
+        <div class="stage-url" id="stage-url">voraai.co.in/dashboard</div>
+        <div style="width:40px"></div>
       </div>
-      <div class="stage-body">
-        <aside class="side">
-          <div class="label">Workspace</div>
-          <button class="active" id="side-review" type="button">Contract review</button>
-          <button id="side-draft" type="button">Draft</button>
-          <button type="button" disabled style="opacity:.35">More tools</button>
-        </aside>
-        <div class="doc">
-          <div class="doc-meta"><span id="doc-name">mutual-nda.sample.pdf</span><span>2 pages</span></div>
-          <div class="doc-paper" id="doc-paper">
-            <h3>Mutual Non-Disclosure Agreement</h3>
-            <p>This Agreement is entered into as of the Effective Date by and between the Disclosing Party and the Receiving Party.</p>
-            <p><span class="hl" id="hl1">8. Indemnity. Receiving Party shall indemnify Disclosing Party against all claims, losses, and damages without limitation as to amount.</span></p>
-            <p><span class="hl2" id="hl2">12. Governing Law. This Agreement shall be governed by the laws of India. The seat of arbitration is not specified.</span></p>
-            <p>14. Notices. Notices under this Agreement shall be delivered with seven (7) days’ prior written notice.</p>
-          </div>
-        </div>
-        <div class="out">
-          <div class="out-head">
-            <strong id="out-title">Risk memo</strong>
-            <span class="badge">India · ICA</span>
-          </div>
-          <div class="status" id="status"><span class="pulse"></span><span id="status-text">Ready — press Run sample</span></div>
-          <div class="find" id="f1"><div class="row"><span class="tag tag-h">HIGH</span><span style="font-size:12px">§8 Indemnity</span></div><p>Unlimited indemnity. Cap liability to fees paid in prior 12 months.</p></div>
-          <div class="find" id="f2"><div class="row"><span class="tag tag-m">MED</span><span style="font-size:12px">§12 Seat</span></div><p>Governing law India, seat silent. Propose Mumbai / Delhi.</p></div>
-          <div class="find" id="f3"><div class="row"><span class="tag tag-l">LOW</span><span style="font-size:12px">§14 Notice</span></div><p>7-day notice is workable for a mutual NDA.</p></div>
-          <div class="note" id="note"><strong>Bench note.</strong> Executable with two revisions: cap §8 and fix the seat. Not legal advice — your judgment stays on the file.</div>
-        </div>
+      <div class="tabs">
+        <button class="btn btn-line active" type="button" data-shot="dashboard">Dashboard</button>
+        <button class="btn btn-line" type="button" data-shot="review">Contract Review</button>
+        <button class="btn btn-line" type="button" data-shot="draft">Draft</button>
       </div>
+      <div class="shot-wrap"><img id="stage-img" src="shots/dashboard.png" alt="Vora dashboard"/></div>
+      <div class="caption" id="stage-cap">Home · pick Review or Draft · credit-priced workflows</div>
     </div>
   </section>
-
   <div class="metrics">
-    <div class="metric"><b>2</b><span>Hero workflows — Review &amp; Draft</span></div>
-    <div class="metric"><b>₹0</b><span>to try the sample NDA</span></div>
-    <div class="metric"><b>ICA</b><span>defaults for Indian matters</span></div>
+    <div class="metric"><b>2</b><span>Hero workflows on the homepage</span></div>
+    <div class="metric"><b>Real UI</b><span>Screenshots from the signed-in app</span></div>
+    <div class="metric"><b>ICA</b><span>India-first defaults in product copy</span></div>
   </div>
-
-  <section class="section" id="why">
-    <h2>Built like chambers software.<br/>Ships like a pocket app.</h2>
-    <p class="sub">Serif for judgment. Product chrome for speed. The homepage only sells what already has usage: review and draft.</p>
-    <div class="grid2">
-      <div class="cardish">
-        <h3>Contract review</h3>
-        <ul>
-          <li>Clause highlights synced to findings</li>
-          <li>High / Medium / Low — not a wall of chat</li>
-          <li>India · ICA framing on every memo</li>
-        </ul>
-      </div>
-      <div class="cardish">
-        <h3>Draft</h3>
-        <ul>
-          <li>Brief → balanced first draft</li>
-          <li>NDA / vendor / employment starters</li>
-          <li>You remain counsel of record</li>
-        </ul>
-      </div>
+  <section class="section" id="gallery">
+    <h2>Product, not placeholders.</h2>
+    <p class="sub">Surfaces lawyers land on after SSO — marketing promise matches the product.</p>
+    <div class="gallery">
+      <figure>
+        <img src="shots/review.png" alt="Contract Review screen"/>
+        <figcaption><strong>Contract Review</strong> Upload / paste · structured risk memo · sample NDA path</figcaption>
+      </figure>
+      <figure>
+        <img src="shots/draft.png" alt="Draft Document screen"/>
+        <figcaption><strong>Draft Document</strong> Commercial brief in · execution-ready first draft out</figcaption>
+      </figure>
     </div>
   </section>
-
   <section class="section" id="pricing">
     <h2>Credits. Not a subscription trap.</h2>
-    <p class="sub">Prepaid packs. No auto-renew theatre.</p>
+    <p class="sub">Keep current packs — transparent, prepaid.</p>
     <div class="pricing">
-      <div class="price"><div class="n">Essential</div><div class="a">₹299 <span>/ 25</span></div><div class="m">Occasional matters</div><button class="btn btn-line" type="button">Choose</button></div>
-      <div class="price hot"><div class="n">Professional</div><div class="a">₹549 <span>/ 50</span></div><div class="m">Regular desk work</div><button class="btn btn-solid" type="button">Choose</button></div>
-      <div class="price"><div class="n">Advanced</div><div class="a">₹999 <span>/ 100</span></div><div class="m">Heavy weeks</div><button class="btn btn-line" type="button">Choose</button></div>
+      <div class="price"><div class="n">Essential</div><div class="a">₹299 <span>/ 25</span></div><div class="m">Occasional matters</div><a class="btn btn-line" href="https://www.voraai.co.in/dashboard">Choose</a></div>
+      <div class="price hot"><div class="n">Professional</div><div class="a">₹549 <span>/ 50</span></div><div class="m">Regular desk work</div><a class="btn btn-solid" href="https://www.voraai.co.in/dashboard">Choose</a></div>
+      <div class="price"><div class="n">Advanced</div><div class="a">₹999 <span>/ 100</span></div><div class="m">Heavy weeks</div><a class="btn btn-line" href="https://www.voraai.co.in/dashboard">Choose</a></div>
     </div>
   </section>
-
   <footer>
-    <div>Vora · Seedrus · Preview mock — not legal advice</div>
-    <div>github.com/rahilsetia/vora-mock-preview</div>
+    <div>Vora revamp preview · real screenshots · Seedrus</div>
+    <div><a href="https://github.com/rahilsetia/vora-mock-preview">github.com/rahilsetia/vora-mock-preview</a></div>
   </footer>
 </div>
 <script>
-const statusEl=document.getElementById('status');
-const statusText=document.getElementById('status-text');
-const finds=[document.getElementById('f1'),document.getElementById('f2'),document.getElementById('f3')];
-const note=document.getElementById('note');
-const outTitle=document.getElementById('out-title');
-const docPaper=document.getElementById('doc-paper');
-const docName=document.getElementById('doc-name');
-const sideReview=document.getElementById('side-review');
-const sideDraft=document.getElementById('side-draft');
-let mode='review'; let timer;
-
-const reviewDoc=`<h3>Mutual Non-Disclosure Agreement</h3>
-<p>This Agreement is entered into as of the Effective Date by and between the Disclosing Party and the Receiving Party.</p>
-<p><span class="hl">8. Indemnity. Receiving Party shall indemnify Disclosing Party against all claims, losses, and damages without limitation as to amount.</span></p>
-<p><span class="hl2">12. Governing Law. This Agreement shall be governed by the laws of India. The seat of arbitration is not specified.</span></p>
-<p>14. Notices. Notices under this Agreement shall be delivered with seven (7) days’ prior written notice.</p>`;
-
-const draftDoc=`<h3>Draft · Mutual NDA (India)</h3>
-<p><strong>Parties.</strong> [Disclosing Party] and [Receiving Party].</p>
-<p><strong>Purpose.</strong> Evaluation of a potential commercial relationship only.</p>
-<p><strong>Term.</strong> Twenty-four (24) months from the Effective Date.</p>
-<p><strong>Liability.</strong> Aggregate liability capped at fees paid in the preceding twelve months, excluding fraud or wilful misconduct.</p>
-<p><strong>Governing law &amp; seat.</strong> Laws of India; seat of arbitration at Mumbai.</p>`;
-
-function resetFindings(){finds.forEach(f=>f.classList.remove('show'));note.classList.remove('show');}
-function setReviewChrome(){
-  mode='review'; sideReview.classList.add('active'); sideDraft.classList.remove('active');
-  outTitle.textContent='Risk memo'; docName.textContent='mutual-nda.sample.pdf';
-  docPaper.innerHTML=reviewDoc; resetFindings();
-  statusEl.classList.remove('live'); statusText.textContent='Ready — press Run sample';
-}
-function setDraftChrome(){
-  mode='draft'; sideDraft.classList.add('active'); sideReview.classList.remove('active');
-  outTitle.textContent='Draft brief'; docName.textContent='brief → mutual-nda.docx';
-  docPaper.innerHTML=draftDoc; resetFindings();
-  statusEl.classList.remove('live'); statusText.textContent='Draft loaded — edit before send';
-  // show draft-oriented findings quickly
-  finds[0].querySelector('p').textContent='Mutual NDA · 24-month term · purpose-limited.';
-  finds[0].querySelector('.tag').textContent='BRIEF'; finds[0].querySelector('.tag').className='tag tag-m';
-  finds[1].querySelector('p').textContent='Liability capped · ICA defaults applied.';
-  finds[1].querySelector('.tag').textContent='GUARD'; finds[1].querySelector('.tag').className='tag tag-l';
-  finds[2].querySelector('p').textContent='Seat set to Mumbai · Indian courts.';
-  finds[2].querySelector('.tag').textContent='SEAT'; finds[2].querySelector('.tag').className='tag tag-l';
-  note.innerHTML='<strong>Draft ready.</strong> Balanced first pass. You remain counsel of record — review before send.';
-  setTimeout(()=>{finds.forEach((f,i)=>setTimeout(()=>f.classList.add('show'),120*i)); setTimeout(()=>note.classList.add('show'),420);},40);
-}
-
-function runReview(){
-  clearTimeout(timer); setReviewChrome();
-  finds[0].querySelector('p').textContent='Unlimited indemnity. Cap liability to fees paid in prior 12 months.';
-  finds[0].querySelector('.tag').textContent='HIGH'; finds[0].querySelector('.tag').className='tag tag-h';
-  finds[1].querySelector('p').textContent='Governing law India, seat silent. Propose Mumbai / Delhi.';
-  finds[1].querySelector('.tag').textContent='MED'; finds[1].querySelector('.tag').className='tag tag-m';
-  finds[2].querySelector('p').textContent='7-day notice is workable for a mutual NDA.';
-  finds[2].querySelector('.tag').textContent='LOW'; finds[2].querySelector('.tag').className='tag tag-l';
-  note.innerHTML='<strong>Bench note.</strong> Executable with two revisions: cap §8 and fix the seat. Not legal advice — your judgment stays on the file.';
-  statusEl.classList.add('live'); statusText.textContent='Reading clauses…';
-  const steps=['Parsing indemnity language…','Checking seat & governing law…','Writing bench note…','Memo ready'];
-  let i=0;
-  const tick=()=>{
-    statusText.textContent=steps[i];
-    if(i<3){finds[i].classList.add('show'); i++; timer=setTimeout(tick,380);}
-    else {note.classList.add('show'); statusEl.classList.remove('live'); statusText.textContent=steps[3];}
-  };
-  timer=setTimeout(tick,280);
-}
-
-document.getElementById('run-review').onclick=runReview;
-document.getElementById('nav-try').onclick=runReview;
-document.getElementById('run-draft').onclick=setDraftChrome;
-sideReview.onclick=()=>{setReviewChrome();};
-sideDraft.onclick=setDraftChrome;
-// auto-demo once
-setTimeout(runReview,600);
+const shots={
+  dashboard:{src:'shots/dashboard.png',url:'voraai.co.in/dashboard',cap:'Home · pick Review or Draft · credit-priced workflows'},
+  review:{src:'shots/review.png',url:'voraai.co.in/review',cap:'Contract Review · sample NDA available · risk memo output'},
+  draft:{src:'shots/draft.png',url:'voraai.co.in/draft',cap:'Draft Document · brief → first draft · India defaults'}
+};
+const img=document.getElementById('stage-img'), url=document.getElementById('stage-url'), cap=document.getElementById('stage-cap');
+document.querySelectorAll('.tabs [data-shot]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabs [data-shot]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const s=shots[btn.dataset.shot];
+    img.src=s.src; img.alt=btn.dataset.shot; url.textContent=s.url; cap.textContent=s.cap;
+  });
+});
 </script>
 </body>
 </html>
